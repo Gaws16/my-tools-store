@@ -5,10 +5,12 @@ import { useState } from "react";
 import { ShoppingCart, Menu, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useLocale } from "@/lib/i18n/LocaleProvider";
 
 export function Header() {
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);
+  const { t } = useLocale();
 
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -25,32 +27,32 @@ export function Header() {
               <Menu className="h-5 w-5" />
             </Button>
             <Link href="/" className="font-semibold tracking-tight text-xl">
-              ProTools
+              {t("brand")}
             </Link>
             <nav className="hidden md:flex items-center gap-2 text-sm">
               <Link
                 href="/categories/power-tools"
                 className="rounded-md px-3 py-2 hover:bg-accent hover:text-accent-foreground"
               >
-                Power Tools
+                {t("nav_power")}
               </Link>
               <Link
                 href="/categories/hand-tools"
                 className="rounded-md px-3 py-2 hover:bg-accent hover:text-accent-foreground"
               >
-                Hand Tools
+                {t("nav_hand")}
               </Link>
               <Link
                 href="/categories/accessories"
                 className="rounded-md px-3 py-2 hover:bg-accent hover:text-accent-foreground"
               >
-                Accessories
+                {t("nav_accessories")}
               </Link>
               <Link
                 href="/categories/safety"
                 className="rounded-md px-3 py-2 hover:bg-accent hover:text-accent-foreground"
               >
-                Safety
+                {t("nav_safety")}
               </Link>
             </nav>
           </div>
@@ -63,7 +65,7 @@ export function Header() {
             <Input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search tools, brands, SKUs..."
+              placeholder={t("search_placeholder")}
               className="pl-9"
             />
           </form>
@@ -75,7 +77,7 @@ export function Header() {
               className="hidden sm:inline-flex"
               asChild
             >
-              <Link href="/auth/sign-in">Sign in</Link>
+              <Link href="/auth/sign-in">{t("sign_in")}</Link>
             </Button>
             <Button
               variant="default"
@@ -83,7 +85,7 @@ export function Header() {
               className="hidden sm:inline-flex"
               asChild
             >
-              <Link href="/auth/register">Create account</Link>
+              <Link href="/auth/register">{t("create_account")}</Link>
             </Button>
             <Button variant="outline" size="icon" aria-label="Cart" asChild>
               <Link href="/cart">
@@ -101,7 +103,7 @@ export function Header() {
                 <Input
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
-                  placeholder="Search tools..."
+                  placeholder={t("search_placeholder")}
                   className="pl-9"
                 />
               </form>
@@ -111,25 +113,25 @@ export function Header() {
                 href="/categories/power-tools"
                 className="rounded-md px-3 py-2 hover:bg-accent hover:text-accent-foreground"
               >
-                Power Tools
+                {t("nav_power")}
               </Link>
               <Link
                 href="/categories/hand-tools"
                 className="rounded-md px-3 py-2 hover:bg-accent hover:text-accent-foreground"
               >
-                Hand Tools
+                {t("nav_hand")}
               </Link>
               <Link
                 href="/categories/accessories"
                 className="rounded-md px-3 py-2 hover:bg-accent hover:text-accent-foreground"
               >
-                Accessories
+                {t("nav_accessories")}
               </Link>
               <Link
                 href="/categories/safety"
                 className="rounded-md px-3 py-2 hover:bg-accent hover:text-accent-foreground"
               >
-                Safety
+                {t("nav_safety")}
               </Link>
             </nav>
           </div>

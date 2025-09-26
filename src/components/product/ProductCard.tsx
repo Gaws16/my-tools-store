@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -7,6 +9,7 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { useLocale } from "@/lib/i18n/LocaleProvider";
 
 export type Product = {
   id: string;
@@ -17,6 +20,7 @@ export type Product = {
 };
 
 export function ProductCard({ product }: { product: Product }) {
+  const { t } = useLocale();
   return (
     <Card className="group overflow-hidden">
       <CardHeader className="p-0">
@@ -47,12 +51,16 @@ export function ProductCard({ product }: { product: Product }) {
         >
           {product.name}
         </Link>
-        <div className="mt-1 text-sm text-muted-foreground">In stock</div>
+        <div className="mt-1 text-sm text-muted-foreground">
+          {t("in_stock")}
+        </div>
       </CardContent>
       <CardFooter className="p-4 pt-0 flex items-center justify-between">
         <div className="font-semibold">${product.price.toFixed(2)}</div>
         <Button size="sm" asChild>
-          <Link href={`/cart/add?productId=${product.id}`}>Add to cart</Link>
+          <Link href={`/cart/add?productId=${product.id}`}>
+            {t("add_to_cart")}
+          </Link>
         </Button>
       </CardFooter>
     </Card>

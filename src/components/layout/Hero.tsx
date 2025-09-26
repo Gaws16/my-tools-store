@@ -1,28 +1,32 @@
+"use client";
+
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { useLocale } from "@/lib/i18n/LocaleProvider";
 
 export function Hero() {
+  const { t } = useLocale();
   return (
     <section className="relative">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 sm:py-24 grid gap-10 md:grid-cols-2 items-center">
         <div className="space-y-5">
           <span className="inline-flex items-center rounded-full bg-secondary px-2.5 py-1 text-xs font-medium text-secondary-foreground">
-            New season • Pro-grade
+            {t("hero_badge")}
           </span>
           <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight">
-            Build better with pro tools that last
+            {t("hero_title")}
           </h1>
           <p className="text-muted-foreground max-w-prose">
-            Top-tier power tools, precision hand tools, and safety gear curated
-            for professionals and enthusiasts. Shop trusted brands and elevate
-            your craft.
+            {t("hero_subtitle")}
           </p>
           <div className="flex gap-3">
             <Button asChild>
-              <Link href="/collections/new">Shop new arrivals</Link>
+              <Link href="/collections/new">{t("hero_cta_primary")}</Link>
             </Button>
             <Button variant="outline" asChild>
-              <Link href="/categories/power-tools">Browse power tools</Link>
+              <Link href="/categories/power-tools">
+                {t("hero_cta_secondary")}
+              </Link>
             </Button>
           </div>
         </div>

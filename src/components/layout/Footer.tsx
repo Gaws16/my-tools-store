@@ -1,24 +1,28 @@
+"use client";
+
 import Link from "next/link";
+import { useLocale } from "@/lib/i18n/LocaleProvider";
 
 export function Footer() {
+  const { t } = useLocale();
   return (
     <footer className="border-t bg-background">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10 grid grid-cols-1 md:grid-cols-4 gap-8">
         <div className="space-y-3">
-          <div className="text-xl font-semibold tracking-tight">ProTools</div>
-          <p className="text-sm text-muted-foreground">
-            Premium tools and gear for professionals and serious DIYers.
-          </p>
+          <div className="text-xl font-semibold tracking-tight">
+            {t("brand")}
+          </div>
+          <p className="text-sm text-muted-foreground">{t("hero_subtitle")}</p>
         </div>
         <div>
-          <div className="text-sm font-medium mb-3">Shop</div>
+          <div className="text-sm font-medium mb-3">{t("footer_shop")}</div>
           <ul className="space-y-2 text-sm text-muted-foreground">
             <li>
               <Link
                 href="/categories/power-tools"
                 className="hover:text-foreground"
               >
-                Power Tools
+                {t("nav_power")}
               </Link>
             </li>
             <li>
@@ -26,7 +30,7 @@ export function Footer() {
                 href="/categories/hand-tools"
                 className="hover:text-foreground"
               >
-                Hand Tools
+                {t("nav_hand")}
               </Link>
             </li>
             <li>
@@ -34,62 +38,62 @@ export function Footer() {
                 href="/categories/accessories"
                 className="hover:text-foreground"
               >
-                Accessories
+                {t("nav_accessories")}
               </Link>
             </li>
             <li>
               <Link href="/categories/safety" className="hover:text-foreground">
-                Safety
+                {t("nav_safety")}
               </Link>
             </li>
           </ul>
         </div>
         <div>
-          <div className="text-sm font-medium mb-3">Company</div>
+          <div className="text-sm font-medium mb-3">{t("footer_company")}</div>
           <ul className="space-y-2 text-sm text-muted-foreground">
             <li>
               <Link href="/about" className="hover:text-foreground">
-                About
+                {t("footer_about")}
               </Link>
             </li>
             <li>
               <Link href="/careers" className="hover:text-foreground">
-                Careers
+                {t("footer_careers")}
               </Link>
             </li>
             <li>
               <Link href="/blog" className="hover:text-foreground">
-                Blog
+                {t("footer_blog")}
               </Link>
             </li>
             <li>
               <Link href="/contact" className="hover:text-foreground">
-                Contact
+                {t("footer_contact")}
               </Link>
             </li>
           </ul>
         </div>
         <div>
-          <div className="text-sm font-medium mb-3">Support</div>
+          <div className="text-sm font-medium mb-3">{t("footer_support")}</div>
           <ul className="space-y-2 text-sm text-muted-foreground">
             <li>
               <Link href="/help" className="hover:text-foreground">
-                Help Center
+                {t("footer_help")}
               </Link>
             </li>
             <li>
               <Link href="/shipping" className="hover:text-foreground">
-                Shipping & Returns
+                {t("footer_shipping")}
               </Link>
             </li>
             <li>
               <Link href="/warranty" className="hover:text-foreground">
-                Warranty
+                {t("footer_warranty")}
               </Link>
             </li>
             <li>
               <Link href="/privacy" className="hover:text-foreground">
-                Privacy Policy
+                {t("footer_privacy")}
               </Link>
             </li>
           </ul>
@@ -97,8 +101,10 @@ export function Footer() {
       </div>
       <div className="border-t">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6 text-xs text-muted-foreground flex items-center justify-between">
-          <p>© {new Date().getFullYear()} ProTools. All rights reserved.</p>
-          <p>Built with Next.js, Tailwind CSS, and shadcn/ui</p>
+          <p>
+            © {new Date().getFullYear()} {t("brand")}. All rights reserved.
+          </p>
+          <p>{t("footer_built")}</p>
         </div>
       </div>
     </footer>

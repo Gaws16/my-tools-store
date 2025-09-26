@@ -1,8 +1,12 @@
+"use client";
+
 import Hero from "@/components/layout/Hero";
 import ProductGrid from "@/components/product/ProductGrid";
 import type { Product } from "@/components/product/ProductCard";
+import { useLocale } from "@/lib/i18n/LocaleProvider";
 
 export default function Home() {
+  const { t } = useLocale();
   const products: Product[] = [
     {
       id: "1",
@@ -23,7 +27,7 @@ export default function Home() {
       <Hero />
       <section className="space-y-4">
         <h2 className="text-xl font-semibold tracking-tight">
-          Featured products
+          {t("featured_products")}
         </h2>
         <ProductGrid products={products} />
       </section>
