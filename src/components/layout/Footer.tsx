@@ -19,7 +19,7 @@ export function Footer() {
           <ul className="space-y-2 text-sm text-muted-foreground">
             <li>
               <Link
-                href="/categories/power-tools"
+                href="/category/power-tools"
                 className="hover:text-foreground"
               >
                 {t("nav_power")}
@@ -27,7 +27,7 @@ export function Footer() {
             </li>
             <li>
               <Link
-                href="/categories/hand-tools"
+                href="/category/hand-tools"
                 className="hover:text-foreground"
               >
                 {t("nav_hand")}
@@ -35,14 +35,14 @@ export function Footer() {
             </li>
             <li>
               <Link
-                href="/categories/accessories"
+                href="/category/accessories"
                 className="hover:text-foreground"
               >
                 {t("nav_accessories")}
               </Link>
             </li>
             <li>
-              <Link href="/categories/safety" className="hover:text-foreground">
+              <Link href="/category/safety" className="hover:text-foreground">
                 {t("nav_safety")}
               </Link>
             </li>

@@ -21,10 +21,10 @@ export function Hero() {
           </p>
           <div className="flex gap-3">
             <Button asChild>
-              <Link href="/collections/new">{t("hero_cta_primary")}</Link>
+              <Link href="/search">{t("hero_cta_primary")}</Link>
             </Button>
             <Button variant="outline" asChild>
-              <Link href="/categories/power-tools">
+              <Link href="/category/power-tools">
                 {t("hero_cta_secondary")}
               </Link>
             </Button>

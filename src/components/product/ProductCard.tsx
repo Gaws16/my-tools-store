@@ -18,6 +18,7 @@ export type Product = {
   price: number;
   imageUrl?: string;
   badge?: string;
+  slug: string;
 };
 
 export function ProductCard({ product }: { product: Product }) {
@@ -47,7 +48,7 @@ export function ProductCard({ product }: { product: Product }) {
       </CardHeader>
       <CardContent className="p-4">
         <Link
-          href={`/product/${product.id}`}
+          href={`/products/${product.slug}`}
           className="line-clamp-2 font-medium hover:underline"
         >
           {product.name}

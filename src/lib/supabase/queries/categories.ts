@@ -1,10 +1,20 @@
 import getSupabaseServerClient from "@/lib/supabase/server";
+import getSupabaseBrowserClient from "@/lib/supabase/client";
 import type { Database } from "@/lib/supabase/database.types";
 
 export type CategoryRow = Database["public"]["Tables"]["categories"]["Row"];
 
-export async function fetchCategories() {
-  const supabase = getSupabaseServerClient();
+export async function fetchCategories(params?: {
+  client?: "server" | "browser";
+}) {
+  const { client = typeof window === "undefined" ? "server" : "browser" } =
+    params || {};
+
+  const supabase =
+    client === "server"
+      ? getSupabaseServerClient()
+      : getSupabaseBrowserClient();
+
   const { data, error } = await supabase
     .from("categories")
     .select("*")

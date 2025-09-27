@@ -23,6 +23,7 @@ export default function RelatedProducts({
                   ? (p.images as any)[0]
                   : undefined,
               badge: p.is_featured ? "Featured" : undefined,
+              slug: p.slug,
             }}
           />
         ))}

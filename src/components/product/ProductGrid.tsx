@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import ProductCard from "@/components/product/ProductCard";
 import { fetchProducts } from "@/lib/supabase/queries/products";
+import { fetchCategories } from "@/lib/supabase/queries/categories";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -19,6 +20,7 @@ type Product = {
   price: number;
   imageUrl?: string;
   badge?: string;
+  slug: string;
 };
 
 export function ProductGrid({
@@ -36,6 +38,7 @@ export function ProductGrid({
   const [error, setError] = useState<string | null>(null);
   const [products, setProducts] = useState<Product[]>([]);
   const [total, setTotal] = useState(0);
+  const [categories, setCategories] = useState<any[]>([]);
   const pageSize = 12;
 
   useEffect(() => {
@@ -45,6 +48,17 @@ export function ProductGrid({
   useEffect(() => {
     setSearch(initialSearch ?? "");
   }, [initialSearch]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const cats = await fetchCategories({ client: "browser" });
+        setCategories(cats);
+      } catch (e) {
+        console.error("Failed to fetch categories:", e);
+      }
+    })();
+  }, []);
 
   useEffect(() => {
     let mounted = true;
@@ -70,6 +84,7 @@ export function ProductGrid({
                 ? r.images[0]
                 : undefined,
             badge: r.is_featured ? "Featured" : undefined,
+            slug: r.slug,
           }))
         );
         setTotal(total);
@@ -114,7 +129,11 @@ export function ProductGrid({
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">All</SelectItem>
-            {/* TODO: Populate categories from Supabase and lift state up if needed */}
+            {categories.map((cat) => (
+              <SelectItem key={cat.slug} value={cat.slug}>
+                {cat.name}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
       </div>
