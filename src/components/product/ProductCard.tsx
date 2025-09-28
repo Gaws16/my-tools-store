@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
+import { addToCart } from "@/lib/supabase/queries/cart";
 
 export type Product = {
   id: string;
@@ -17,6 +18,7 @@ export type Product = {
   price: number;
   imageUrl?: string;
   badge?: string;
+  slug: string;
 };
 
 export function ProductCard({ product }: { product: Product }) {
@@ -46,7 +48,7 @@ export function ProductCard({ product }: { product: Product }) {
       </CardHeader>
       <CardContent className="p-4">
         <Link
-          href={`/product/${product.id}`}
+          href={`/products/${product.slug}`}
           className="line-clamp-2 font-medium hover:underline"
         >
           {product.name}
@@ -57,10 +59,18 @@ export function ProductCard({ product }: { product: Product }) {
       </CardContent>
       <CardFooter className="p-4 pt-0 flex items-center justify-between">
         <div className="font-semibold">${product.price.toFixed(2)}</div>
-        <Button size="sm" asChild>
-          <Link href={`/cart/add?productId=${product.id}`}>
-            {t("add_to_cart")}
-          </Link>
+        <Button
+          size="sm"
+          onClick={async () => {
+            try {
+              await addToCart(product.id, 1);
+              // TODO: success toast
+            } catch (e) {
+              // TODO: error toast or redirect to sign-in
+            }
+          }}
+        >
+          {t("add_to_cart")}
         </Button>
       </CardFooter>
     </Card>
