@@ -5,11 +5,14 @@ import { useState } from "react";
 import { ShoppingCart, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
+import { useCart } from "@/lib/cart/CartProvider";
 import SearchAutocomplete from "@/components/layout/search-autocomplete";
 
 export function Header() {
   const [open, setOpen] = useState(false);
   const { t } = useLocale();
+  const { getTotalItems } = useCart();
+  const totalItems = getTotalItems();
 
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -55,9 +58,20 @@ export function Header() {
             >
               <Link href="/auth/register">{t("create_account")}</Link>
             </Button>
-            <Button variant="outline" size="icon" aria-label="Cart" asChild>
+            <Button
+              variant="outline"
+              size="icon"
+              aria-label="Cart"
+              asChild
+              className="relative"
+            >
               <Link href="/cart">
                 <ShoppingCart className="h-5 w-5" />
+                {totalItems > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-primary text-primary-foreground text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                    {totalItems > 99 ? "99+" : totalItems}
+                  </span>
+                )}
               </Link>
             </Button>
           </div>
@@ -77,9 +91,20 @@ export function Header() {
             <Link href="/" className="font-semibold tracking-tight text-xl">
               {t("brand")}
             </Link>
-            <Button variant="outline" size="icon" aria-label="Cart" asChild>
+            <Button
+              variant="outline"
+              size="icon"
+              aria-label="Cart"
+              asChild
+              className="relative"
+            >
               <Link href="/cart">
                 <ShoppingCart className="h-5 w-5" />
+                {totalItems > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-primary text-primary-foreground text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                    {totalItems > 99 ? "99+" : totalItems}
+                  </span>
+                )}
               </Link>
             </Button>
           </div>

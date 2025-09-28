@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { LocaleProvider } from "@/lib/i18n/LocaleProvider";
+import { CartProvider } from "@/lib/cart/CartProvider";
 import LanguageFloating from "@/components/layout/LanguageFloating";
 
 const geistSans = Geist({
@@ -32,10 +33,12 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <LocaleProvider>
-          <Header />
-          <main>{children}</main>
-          <Footer />
-          <LanguageFloating />
+          <CartProvider>
+            <Header />
+            <main>{children}</main>
+            <Footer />
+            <LanguageFloating />
+          </CartProvider>
         </LocaleProvider>
       </body>
     </html>
