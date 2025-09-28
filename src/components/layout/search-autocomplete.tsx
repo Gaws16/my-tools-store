@@ -9,6 +9,7 @@ export default function SearchAutocomplete() {
   const [q, setQ] = useState("");
   const [open, setOpen] = useState(false);
   const [items, setItems] = useState<any[]>([]);
+  const [isFocused, setIsFocused] = useState(false);
   const timeoutRef = useRef<number | null>(null);
 
   useEffect(() => {
@@ -34,11 +35,21 @@ export default function SearchAutocomplete() {
   }, [q]);
 
   return (
-    <div className="relative w-full">
+    <div
+      className={`relative w-full transition-all duration-300 ease-in-out ${
+        isFocused ? "max-w-2xl" : "max-w-xs"
+      }`}
+    >
       <Input
         value={q}
         onChange={(e) => setQ(e.target.value)}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => {
+          // Delay blur to allow clicking on dropdown items
+          setTimeout(() => setIsFocused(false), 200);
+        }}
         placeholder="Search products..."
+        className="transition-all duration-300 ease-in-out"
       />
       {open && items.length > 0 && (
         <div className="absolute z-50 mt-1 w-full rounded-md border bg-background shadow">

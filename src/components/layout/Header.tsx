@@ -6,7 +6,6 @@ import { ShoppingCart, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 import SearchAutocomplete from "@/components/layout/search-autocomplete";
-import CategoryNav from "@/components/layout/category-nav";
 
 export function Header() {
   const [open, setOpen] = useState(false);
@@ -25,13 +24,16 @@ export function Header() {
             >
               {t("brand")}
             </Link>
-            <div className="flex items-center">
-              <CategoryNav />
-            </div>
+            <Link
+              href="/search"
+              className="text-sm font-medium hover:text-accent-foreground transition-colors"
+            >
+              Products
+            </Link>
           </div>
 
           {/* Center: Search */}
-          <div className="flex-1 max-w-md">
+          <div className="flex-1">
             <SearchAutocomplete />
           </div>
 
@@ -88,7 +90,12 @@ export function Header() {
                 <SearchAutocomplete />
               </div>
               <div>
-                <CategoryNav />
+                <Link
+                  href="/search"
+                  className="text-sm font-medium hover:text-accent-foreground transition-colors"
+                >
+                  Products
+                </Link>
               </div>
               <div className="flex flex-col gap-2">
                 <Button variant="ghost" size="sm" asChild>
