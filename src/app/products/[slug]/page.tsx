@@ -6,10 +6,11 @@ import {
   fetchRelatedProducts,
 } from "@/lib/supabase/queries/products";
 import ProductGallery from "@/components/product/product-gallery";
-import ProductSpecifications from "@/components/product/product-specifications";
 import RelatedProducts from "@/components/product/related-products";
+import ProductActions from "@/components/product/product-actions";
+import ProductInfo from "@/components/product/product-info";
+import ProductSections from "@/components/product/product-sections";
 import Breadcrumb from "@/components/layout/breadcrumb";
-import { Button } from "@/components/ui/button";
 
 export async function generateStaticParams() {
   const slugs = await fetchProductSlugs();
@@ -52,7 +53,6 @@ export default async function ProductPage({
   const images: string[] = Array.isArray(product.images)
     ? (product.images as any)
     : [];
-  const specs = (product.specifications as any) || null;
   const categorySlug = product?.categories?.slug as string | undefined;
   const related = categorySlug
     ? await fetchRelatedProducts(categorySlug, product.slug, 8)
@@ -105,70 +105,28 @@ export default async function ProductPage({
             <p className="text-muted-foreground">{product.short_description}</p>
           )}
 
-          <div className="text-sm text-muted-foreground">
-            {product.stock_quantity > 0 ? "In stock" : "Out of stock"}
-          </div>
+          <ProductInfo product={product} />
 
-          <div className="flex items-center gap-2">
-            <Button size="lg">Add to cart</Button>
-            <Button variant="outline" size="lg">
-              Wishlist
-            </Button>
-          </div>
-
-          <div className="grid grid-cols-2 gap-3 text-sm">
-            {product.power_source && (
-              <div>
-                <span className="text-muted-foreground">Power:</span>{" "}
-                {product.power_source}
-              </div>
-            )}
-            {product.voltage != null && (
-              <div>
-                <span className="text-muted-foreground">Voltage:</span>{" "}
-                {product.voltage} V
-              </div>
-            )}
-            {product.warranty_months != null && (
-              <div>
-                <span className="text-muted-foreground">Warranty:</span>{" "}
-                {product.warranty_months} mo
-              </div>
-            )}
-            {product.brands?.name && (
-              <div>
-                <span className="text-muted-foreground">Brand:</span>{" "}
-                {product.brands.name}
-              </div>
-            )}
-          </div>
+          <ProductActions
+            product={{
+              id: product.id,
+              name: product.name,
+              price: Number(product.price),
+              sale_price: product.sale_price
+                ? Number(product.sale_price)
+                : undefined,
+              imageUrl:
+                Array.isArray(product.images) && product.images.length
+                  ? (product.images as any)[0]
+                  : undefined,
+              slug: product.slug,
+              stock_quantity: product.stock_quantity,
+            }}
+          />
         </div>
       </div>
 
-      {product.description && (
-        <section className="space-y-2">
-          <h2 className="text-lg font-semibold">Description</h2>
-          <p className="text-muted-foreground whitespace-pre-line">
-            {product.description}
-          </p>
-        </section>
-      )}
-
-      <section className="space-y-2">
-        <h2 className="text-lg font-semibold">Specifications</h2>
-        <ProductSpecifications specs={specs} />
-      </section>
-
-      {Array.isArray(product.features) && product.features.length > 0 && (
-        <section className="space-y-2">
-          <h2 className="text-lg font-semibold">Features</h2>
-          <ul className="list-disc pl-5 text-sm text-muted-foreground">
-            {(product.features as string[]).map((f, i) => (
-              <li key={i}>{f}</li>
-            ))}
-          </ul>
-        </section>
-      )}
+      <ProductSections product={product} />
 
       <RelatedProducts products={related as any} />
     </div>

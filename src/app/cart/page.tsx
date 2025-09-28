@@ -29,12 +29,14 @@ export default function CartPage() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
         <div className="text-center py-12">
           <ShoppingBag className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
-          <h1 className="text-2xl font-semibold mb-2">Your cart is empty</h1>
+          <h1 className="text-2xl font-semibold mb-2">
+            {t("cart_empty_title")}
+          </h1>
           <p className="text-muted-foreground mb-6">
-            Looks like you haven't added any items to your cart yet.
+            {t("cart_empty_description")}
           </p>
           <Button asChild>
-            <Link href="/search">Continue Shopping</Link>
+            <Link href="/search">{t("continue_shopping")}</Link>
           </Button>
         </div>
       </div>
@@ -44,9 +46,12 @@ export default function CartPage() {
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold tracking-tight">Shopping Cart</h1>
+        <h1 className="text-3xl font-bold tracking-tight">
+          {t("shopping_cart")}
+        </h1>
         <p className="text-muted-foreground">
-          {totalItems} {totalItems === 1 ? "item" : "items"} in your cart
+          {totalItems}{" "}
+          {totalItems === 1 ? t("item_in_cart") : t("items_in_cart")}
         </p>
       </div>
 
@@ -82,7 +87,7 @@ export default function CartPage() {
                       {item.name}
                     </Link>
                     <p className="text-sm text-muted-foreground mt-1">
-                      ${item.price.toFixed(2)} each
+                      ${item.price.toFixed(2)} {t("each")}
                     </p>
                   </div>
 
@@ -129,41 +134,44 @@ export default function CartPage() {
         <div className="lg:col-span-1">
           <Card>
             <CardHeader>
-              <CardTitle>Order Summary</CardTitle>
+              <CardTitle>{t("order_summary")}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex justify-between">
-                <span>Subtotal ({totalItems} items)</span>
+                <span>
+                  {t("subtotal")} ({totalItems}{" "}
+                  {totalItems === 1 ? t("item_in_cart") : t("items_in_cart")})
+                </span>
                 <span>${totalPrice.toFixed(2)}</span>
               </div>
               <div className="flex justify-between">
-                <span>Shipping</span>
+                <span>{t("shipping")}</span>
                 <span className="text-sm text-muted-foreground">
-                  Calculated at checkout
+                  {t("calculated_at_checkout")}
                 </span>
               </div>
               <div className="flex justify-between">
-                <span>Tax</span>
+                <span>{t("tax")}</span>
                 <span className="text-sm text-muted-foreground">
-                  Calculated at checkout
+                  {t("calculated_at_checkout")}
                 </span>
               </div>
               <Separator />
               <div className="flex justify-between font-semibold text-lg">
-                <span>Total</span>
+                <span>{t("total")}</span>
                 <span>${totalPrice.toFixed(2)}</span>
               </div>
 
               <Button className="w-full" size="lg" asChild>
-                <Link href="/checkout">Proceed to Checkout</Link>
+                <Link href="/checkout">{t("proceed_to_checkout")}</Link>
               </Button>
 
               <Button variant="outline" className="w-full" onClick={clearCart}>
-                Clear Cart
+                {t("clear_cart")}
               </Button>
 
               <Button variant="ghost" className="w-full" asChild>
-                <Link href="/search">Continue Shopping</Link>
+                <Link href="/search">{t("continue_shopping")}</Link>
               </Button>
             </CardContent>
           </Card>

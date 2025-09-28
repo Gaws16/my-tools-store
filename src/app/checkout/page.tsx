@@ -36,12 +36,14 @@ export default function CheckoutPage() {
     return (
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
         <div className="text-center py-12">
-          <h1 className="text-2xl font-semibold mb-2">Your cart is empty</h1>
+          <h1 className="text-2xl font-semibold mb-2">
+            {t("cart_empty_title")}
+          </h1>
           <p className="text-muted-foreground mb-6">
             Add some items to your cart before checking out.
           </p>
           <Button asChild>
-            <Link href="/search">Continue Shopping</Link>
+            <Link href="/search">{t("continue_shopping")}</Link>
           </Button>
         </div>
       </div>
@@ -54,10 +56,10 @@ export default function CheckoutPage() {
         <Button variant="ghost" asChild className="mb-4">
           <Link href="/cart">
             <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to Cart
+            {t("back_to_cart")}
           </Link>
         </Button>
-        <h1 className="text-3xl font-bold tracking-tight">Checkout</h1>
+        <h1 className="text-3xl font-bold tracking-tight">{t("checkout")}</h1>
       </div>
 
       <div className="grid gap-8 lg:grid-cols-2">
@@ -66,11 +68,11 @@ export default function CheckoutPage() {
           {/* Contact Information */}
           <Card>
             <CardHeader>
-              <CardTitle>Contact Information</CardTitle>
+              <CardTitle>{t("contact_information")}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email">{t("email")}</Label>
                 <Input id="email" type="email" placeholder="your@email.com" />
               </div>
             </CardContent>
@@ -79,30 +81,30 @@ export default function CheckoutPage() {
           {/* Shipping Address */}
           <Card>
             <CardHeader>
-              <CardTitle>Shipping Address</CardTitle>
+              <CardTitle>{t("shipping_address")}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <Label htmlFor="firstName">First Name</Label>
+                  <Label htmlFor="firstName">{t("first_name")}</Label>
                   <Input id="firstName" placeholder="John" />
                 </div>
                 <div>
-                  <Label htmlFor="lastName">Last Name</Label>
+                  <Label htmlFor="lastName">{t("last_name")}</Label>
                   <Input id="lastName" placeholder="Doe" />
                 </div>
               </div>
               <div>
-                <Label htmlFor="address">Address</Label>
+                <Label htmlFor="address">{t("address")}</Label>
                 <Input id="address" placeholder="123 Main St" />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <Label htmlFor="city">City</Label>
+                  <Label htmlFor="city">{t("city")}</Label>
                   <Input id="city" placeholder="New York" />
                 </div>
                 <div>
-                  <Label htmlFor="zip">ZIP Code</Label>
+                  <Label htmlFor="zip">{t("zip_code")}</Label>
                   <Input id="zip" placeholder="10001" />
                 </div>
               </div>
@@ -114,29 +116,29 @@ export default function CheckoutPage() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <CreditCard className="h-5 w-5" />
-                Payment Information
+                {t("payment_information")}
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="p-4 border-2 border-dashed border-muted-foreground/25 rounded-lg text-center">
                 <CreditCard className="h-8 w-8 mx-auto mb-2 text-muted-foreground" />
                 <p className="text-sm text-muted-foreground mb-2">
-                  Stripe Payment Integration
+                  {t("stripe_integration")}
                 </p>
                 <p className="text-xs text-muted-foreground">
-                  This would integrate with Stripe for secure payment processing
+                  {t("stripe_description")}
                 </p>
               </div>
 
               {/* Placeholder for Stripe Elements */}
               <div className="space-y-4">
                 <div>
-                  <Label>Card Number</Label>
+                  <Label>{t("card_number")}</Label>
                   <Input placeholder="1234 5678 9012 3456" disabled />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <Label>Expiry Date</Label>
+                    <Label>{t("expiry_date")}</Label>
                     <Input placeholder="MM/YY" disabled />
                   </div>
                   <div>
@@ -153,7 +155,7 @@ export default function CheckoutPage() {
         <div>
           <Card className="sticky top-8">
             <CardHeader>
-              <CardTitle>Order Summary</CardTitle>
+              <CardTitle>{t("order_summary")}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               {/* Order Items */}
@@ -195,22 +197,25 @@ export default function CheckoutPage() {
 
               <div className="space-y-2">
                 <div className="flex justify-between">
-                  <span>Subtotal ({totalItems} items)</span>
+                  <span>
+                    {t("subtotal")} ({totalItems}{" "}
+                    {totalItems === 1 ? t("item_in_cart") : t("items_in_cart")})
+                  </span>
                   <span>${totalPrice.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>Shipping</span>
+                  <span>{t("shipping")}</span>
                   <span className="text-sm text-muted-foreground">$9.99</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>Tax</span>
+                  <span>{t("tax")}</span>
                   <span className="text-sm text-muted-foreground">
                     ${(totalPrice * 0.08).toFixed(2)}
                   </span>
                 </div>
                 <Separator />
                 <div className="flex justify-between font-semibold text-lg">
-                  <span>Total</span>
+                  <span>{t("total")}</span>
                   <span>
                     ${(totalPrice + 9.99 + totalPrice * 0.08).toFixed(2)}
                   </span>
@@ -226,18 +231,18 @@ export default function CheckoutPage() {
                 {isProcessing ? (
                   <>
                     <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                    Processing...
+                    {t("processing")}
                   </>
                 ) : (
                   <>
                     <Lock className="h-4 w-4 mr-2" />
-                    Complete Order
+                    {t("complete_order")}
                   </>
                 )}
               </Button>
 
               <p className="text-xs text-muted-foreground text-center">
-                Your payment information is secure and encrypted
+                {t("secure_payment")}
               </p>
             </CardContent>
           </Card>
