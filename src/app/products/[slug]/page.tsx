@@ -10,6 +10,7 @@ import RelatedProducts from "@/components/product/related-products";
 import ProductActions from "@/components/product/product-actions";
 import ProductInfo from "@/components/product/product-info";
 import ProductSections from "@/components/product/product-sections";
+import Price from "@/components/product/price";
 import Breadcrumb from "@/components/layout/breadcrumb";
 
 export async function generateStaticParams() {
@@ -85,20 +86,12 @@ export default async function ProductPage({
             {product.name}
           </h1>
           <div className="flex items-baseline gap-3">
-            {product.sale_price ? (
-              <>
-                <div className="text-2xl font-semibold">
-                  ${Number(product.sale_price).toFixed(2)}
-                </div>
-                <div className="text-muted-foreground line-through">
-                  ${Number(product.price).toFixed(2)}
-                </div>
-              </>
-            ) : (
-              <div className="text-2xl font-semibold">
-                ${Number(product.price).toFixed(2)}
-              </div>
-            )}
+            <Price
+              amount={Number(product.price)}
+              saleAmount={
+                product.sale_price ? Number(product.sale_price) : undefined
+              }
+            />
           </div>
 
           {product.short_description && (

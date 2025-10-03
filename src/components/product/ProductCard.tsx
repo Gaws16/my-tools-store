@@ -11,6 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 import { useCart } from "@/lib/cart/CartProvider";
+import Price from "@/components/product/price";
 
 export type Product = {
   id: string;
@@ -59,7 +60,7 @@ export function ProductCard({ product }: { product: Product }) {
         </div>
       </CardContent>
       <CardFooter className="p-4 pt-0 flex items-center justify-between">
-        <div className="font-semibold">${product.price.toFixed(2)}</div>
+        <Price amount={product.price} />
         <Button
           size="sm"
           onClick={() => {

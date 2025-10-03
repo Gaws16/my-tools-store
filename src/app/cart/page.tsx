@@ -6,15 +6,20 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
+import Price from "@/components/product/price";
 import { Minus, Plus, Trash2, ShoppingBag } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
-
+import { useState } from "react";
+import QuantityModifyer from "@/components/cart/QuantityModifyer";
+import RemoveItem from "@/components/cart/RemoveItem";
+import CartItemButtons from "@/components/cart/CartItemButtons";
+import CartItemBody from "@/components/cart/CartItemBody";
 export default function CartPage() {
   const {
     items,
-    updateQuantity,
+
     removeItem,
     getTotalItems,
     getTotalPrice,
@@ -23,6 +28,29 @@ export default function CartPage() {
   const { t } = useLocale();
   const totalItems = getTotalItems();
   const totalPrice = getTotalPrice();
+  const [isProcessing, setIsProcessing] = useState(false);
+
+  const handleCheckout = async () => {
+    try {
+      setIsProcessing(true);
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          items,
+          successUrl: `${window.location.origin}/checkout/success`,
+          cancelUrl: `${window.location.origin}/checkout/cancel`,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Checkout failed");
+      if (data.url) window.location.href = data.url;
+    } catch (err) {
+      alert((err as Error).message);
+    } finally {
+      setIsProcessing(false);
+    }
+  };
 
   if (items.length === 0) {
     return (
@@ -59,74 +87,7 @@ export default function CartPage() {
         {/* Cart Items */}
         <div className="lg:col-span-2 space-y-4">
           {items.map((item) => (
-            <Card key={item.id}>
-              <CardContent className="p-4">
-                <div className="flex gap-4">
-                  <div className="relative h-20 w-20 flex-shrink-0">
-                    {item.imageUrl ? (
-                      <Image
-                        src={item.imageUrl}
-                        alt={item.name}
-                        fill
-                        className="object-cover rounded-md"
-                      />
-                    ) : (
-                      <div className="h-full w-full bg-muted rounded-md flex items-center justify-center">
-                        <span className="text-xs text-muted-foreground">
-                          No image
-                        </span>
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="flex-1 min-w-0">
-                    <Link
-                      href={`/products/${item.slug}`}
-                      className="font-medium hover:underline line-clamp-2"
-                    >
-                      {item.name}
-                    </Link>
-                    <p className="text-sm text-muted-foreground mt-1">
-                      ${item.price.toFixed(2)} {t("each")}
-                    </p>
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      className="h-8 w-8"
-                      onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                    >
-                      <Minus className="h-4 w-4" />
-                    </Button>
-                    <span className="w-8 text-center">{item.quantity}</span>
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      className="h-8 w-8"
-                      onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                    >
-                      <Plus className="h-4 w-4" />
-                    </Button>
-                  </div>
-
-                  <div className="text-right">
-                    <p className="font-semibold">
-                      ${(item.price * item.quantity).toFixed(2)}
-                    </p>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => removeItem(item.id)}
-                      className="text-destructive hover:text-destructive mt-1"
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+            <CartItemBody key={item.id} item={item} />
           ))}
         </div>
 
@@ -142,7 +103,9 @@ export default function CartPage() {
                   {t("subtotal")} ({totalItems}{" "}
                   {totalItems === 1 ? t("item_in_cart") : t("items_in_cart")})
                 </span>
-                <span>${totalPrice.toFixed(2)}</span>
+                <span>
+                  <Price amount={totalPrice} />
+                </span>
               </div>
               <div className="flex justify-between">
                 <span>{t("shipping")}</span>
@@ -159,11 +122,17 @@ export default function CartPage() {
               <Separator />
               <div className="flex justify-between font-semibold text-lg">
                 <span>{t("total")}</span>
-                <span>${totalPrice.toFixed(2)}</span>
+                <span>
+                  <Price amount={totalPrice} />
+                </span>
               </div>
-
-              <Button className="w-full" size="lg" asChild>
-                <Link href="/checkout">{t("proceed_to_checkout")}</Link>
+              <Button
+                className="w-full"
+                size="lg"
+                onClick={handleCheckout}
+                disabled={isProcessing}
+              >
+                {isProcessing ? "Processing..." : t("proceed_to_checkout")}
               </Button>
 
               <Button variant="outline" className="w-full" onClick={clearCart}>
