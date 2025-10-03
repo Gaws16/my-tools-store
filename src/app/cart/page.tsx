@@ -103,9 +103,6 @@ export default function CartPage() {
                   {t("subtotal")} ({totalItems}{" "}
                   {totalItems === 1 ? t("item_in_cart") : t("items_in_cart")})
                 </span>
-                <span>
-                  <Price amount={totalPrice} />
-                </span>
               </div>
               <div className="flex justify-between">
                 <span>{t("shipping")}</span>
