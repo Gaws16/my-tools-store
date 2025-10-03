@@ -43,7 +43,7 @@ export default function Price({
     if (saleBGN != null && saleEUR != null) {
       return (
         <div className={className}>
-          <span className="text-2xl font-semibold">{bgn(saleBGN)}</span>
+          <span className="text-xl font-semibold">{bgn(saleBGN)}</span>
           <span className="ml-2 text-muted-foreground line-through">
             {bgn(amountBGN)}
           </span>
