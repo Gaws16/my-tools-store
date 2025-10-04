@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 import { useCart } from "@/lib/cart/CartProvider";
 import Price from "@/components/product/price";
+import PriesWithEuro from "../ui/PriceWithEuro";
 
 export type Product = {
   id: string;
@@ -60,9 +61,10 @@ export function ProductCard({ product }: { product: Product }) {
         </div>
       </CardContent>
       <CardFooter className="p-4 pt-0 flex items-center justify-between">
-        <Price amount={product.price} />
+        <PriesWithEuro price={product.price} />
         <Button
           size="sm"
+          className="whitespace-normal text-center leading-tight px-2 py-1"
           onClick={() => {
             addItem({
               id: product.id,
