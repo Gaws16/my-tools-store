@@ -49,10 +49,10 @@ export function ProductCard({ product }: { product: Product }) {
           )}
         </div>
       </CardHeader>
-      <CardContent className="p-4">
+      <CardContent className="p-4 flex-grow">
         <Link
           href={`/products/${product.slug}`}
-          className="line-clamp-2 font-medium hover:underline"
+          className="line-clamp-2 font-medium hover:underline min-h-[3rem]"
         >
           {product.name}
         </Link>
@@ -60,7 +60,8 @@ export function ProductCard({ product }: { product: Product }) {
           {t("in_stock")}
         </div>
       </CardContent>
-      <CardFooter className="p-4 pt-0 flex items-center justify-between">
+
+      <CardFooter className="p-4 pt-0 mt-auto flex items-center justify-between">
         <PriesWithEuro price={product.price} />
         <Button
           size="sm"
