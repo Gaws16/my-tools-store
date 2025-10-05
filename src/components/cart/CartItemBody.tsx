@@ -35,7 +35,7 @@ export default function CartItemBody({ item }: { item: CartItem }) {
               {item.name}
             </Link>
             <div className="text-sm text-muted-foreground mt-1">
-              <Price amount={item.price} /> {t("each")}
+              <Price amount={item.price} />
             </div>
           </div>
 

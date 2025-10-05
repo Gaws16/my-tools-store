@@ -3,28 +3,15 @@
 import { useCart } from "@/lib/cart/CartProvider";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import Price from "@/components/product/price";
-import { Minus, Plus, Trash2, ShoppingBag } from "lucide-react";
-import Image from "next/image";
+import { ShoppingBag } from "lucide-react";
 import Link from "next/link";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 import { useState } from "react";
-import QuantityModifyer from "@/components/cart/QuantityModifyer";
-import RemoveItem from "@/components/cart/RemoveItem";
-import CartItemButtons from "@/components/cart/CartItemButtons";
 import CartItemBody from "@/components/cart/CartItemBody";
 export default function CartPage() {
-  const {
-    items,
-
-    removeItem,
-    getTotalItems,
-    getTotalPrice,
-    clearCart,
-  } = useCart();
+  const { items, getTotalItems, getTotalPrice, clearCart } = useCart();
   const { t } = useLocale();
   const totalItems = getTotalItems();
   const totalPrice = getTotalPrice();
